@@ -18,6 +18,12 @@ public class CharacterMovement : MonoBehaviour
 
     private bool isGrounded = false;
 
+    private CharacterState State
+    { 
+    get { return (CharacterState)animator.GetInteger("State"); }
+    set { animator.SetInteger("State", (int)value); }
+    }
+
     void Awake()
     {
         //search by tag is the cheapest way
@@ -39,6 +45,8 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        State = CharacterState.idle;
+
         if (Input.GetButton("Horizontal"))
         { Move(); }
 
@@ -52,11 +60,14 @@ public class CharacterMovement : MonoBehaviour
         Vector3 direction = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed*Time.deltaTime);
         sprite.flipX = direction.x < 0.0F; //if were moving to eg dir: flip
+        State = CharacterState.move;
     }
 
     private void Jump()
     {
+        State = CharacterState.jump;
         rigidbody.AddForce(transform.up * jump, ForceMode2D.Impulse);
+        
     }
 
     private void IsGrounded()
@@ -65,4 +76,11 @@ public class CharacterMovement : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.3F);
         isGrounded = colliders.Length > 1; //if more than one collider(our) then we're grounded
     }
+}
+
+public enum CharacterState
+{
+    idle, //0
+    move, //1
+    jump  //2
 }

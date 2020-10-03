@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PacmanController : MonoBehaviour {
-    public float speed = 0.4f;
+    public float speed = 0.25f;
     private Vector2 destination = Vector2.zero;
     private Vector2 swipeStart;
     private Vector2 swipeEnd;
@@ -19,23 +19,6 @@ public class PacmanController : MonoBehaviour {
         Vector2 path = Vector2.MoveTowards(transform.position, destination, speed);
         GetComponent<Rigidbody2D>().MovePosition(path);
 
-        // checking user input - TESTING
-        // if (((Vector2) transform.position == destination) || !(canMove((Vector2) transform.position)))
-        // {
-        //     if (Input.GetKey(KeyCode.UpArrow) && canMove(Vector2.up))
-        //         destination = (Vector2)transform.position + (Vector2) new Vector2(0, 35);
-        //     if (Input.GetKey(KeyCode.RightArrow) && canMove(-Vector2.right))
-        //         destination = (Vector2)transform.position - (Vector2) new Vector2(35, 0);
-        //     if (Input.GetKey(KeyCode.DownArrow) && canMove(-Vector2.up))
-        //         destination = (Vector2)transform.position - (Vector2) new Vector2(0, 35);
-        //     if (Input.GetKey(KeyCode.LeftArrow) && canMove(Vector2.right))
-        //         destination = (Vector2)transform.position + (Vector2) new Vector2(35, 0);
-
-        //     Vector2 dir = destination - (Vector2)transform.position;
-        //     GetComponent<Animator>().SetFloat("XDirection", dir.x);
-        //     GetComponent<Animator>().SetFloat("YDirection", dir.y);
-
-        // }
 
         // checking user input - mobile
         if (((Vector2) transform.position == destination) || !(canMove((Vector2) transform.position)))
@@ -65,6 +48,7 @@ public class PacmanController : MonoBehaviour {
             }
         }
 
+        // TODO: Fix buggy animations that cause pacman to spin rapidly
         // animations
         Vector2 dir = destination - (Vector2)transform.position;
         GetComponent<Animator>().SetFloat("XDirection", dir.x);
@@ -78,12 +62,12 @@ public class PacmanController : MonoBehaviour {
             && Mathf.Abs(swipeEnd.y - swipeStart.y) > Mathf.Abs(swipeEnd.x - swipeStart.x))
         {
             // upwards swipe
-            if (swipeEnd.y - swipeStart.y > 0)
+            if ((swipeEnd.y - swipeStart.y > 0) && canMove(Vector2.up))
             {
                 destination = (Vector2)transform.position + (Vector2) new Vector2(0, 35);
             }
             // downwards swipe
-            else if (swipeEnd.y - swipeStart.y < 0)
+            else if ((swipeEnd.y - swipeStart.y < 0) && canMove(-Vector2.up))
             {
                 destination = (Vector2)transform.position - (Vector2) new Vector2(0, 35);
             }
@@ -94,12 +78,12 @@ public class PacmanController : MonoBehaviour {
             && Mathf.Abs(swipeEnd.x - swipeStart.x) > Mathf.Abs(swipeEnd.y - swipeStart.y))
         {
             // right swipe
-            if (swipeEnd.x - swipeStart.x > 0)
+            if ((swipeEnd.x - swipeStart.x > 0) && canMove(-Vector2.right))
             {
                 destination = (Vector2)transform.position - (Vector2) new Vector2(35, 0);
             }
             // left swipe
-            else if (swipeEnd.x - swipeStart.x < 0)
+            else if ((swipeEnd.x - swipeStart.x < 0) && canMove(Vector2.right))
             {
                 destination = (Vector2)transform.position + (Vector2) new Vector2(35, 0);
             }

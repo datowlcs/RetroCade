@@ -7,11 +7,13 @@ using UnityEngine;
 public class GhostController : MonoBehaviour
 {
 
+    // global ghost vars
+    public static float speed = 0.15f;
+    public static float speedCap = 0.15f;
+
     // points for the ghosts to navigate towards
     public Transform[] targetPoints;
     int currPoint = 0;
-
-    public float speed = 0.15f;
 
     void FixedUpdate()
     {
@@ -39,6 +41,7 @@ public class GhostController : MonoBehaviour
         {
             if (PacmanController.lives == 1)
             {
+                // losing scenario, present option to restart or quit
                 PacmanController.score = 0;
                 PacmanController.lives = 3;
                 SceneManager.LoadScene("Pacman");

@@ -4,25 +4,30 @@ using UnityEngine.UI;
 using UnityEngine;
 
 public class PacmanController : MonoBehaviour {
-    public float speed = 0.25f;
+    
+     // global vars
+    public static int score = 0;
+    public static int lives = 3;
+    public static float speed = 0.25f;
+    public static int dotsRemaining;
+
+    // swipe vars
+    public float SWIPE_THRESHOLD = 20f;
     private Vector2 destination = Vector2.zero;
     private Vector2 swipeStart;
     private Vector2 swipeEnd;
     
-    // global vars
-    public static int score = 0;
-    public static int lives = 3;
-
+    // text display vars
     public Text scoreDisplay;
     public Text livesDisplay;
 
-    public float SWIPE_THRESHOLD = 20f;
 
     void Start () {
         destination = transform.position;
+        dotsRemaining = GameObject.FindGameObjectsWithTag("Pacdot").Length;
     }
 
-    void FixedUpdate () {
+    void FixedUpdate () {;
 
         scoreDisplay.text = score.ToString();
         livesDisplay.text = lives.ToString();

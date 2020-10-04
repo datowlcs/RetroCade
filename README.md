@@ -1,6 +1,6 @@
 # RetroCade / Press Start
 
-![Image of ARPoster](https://gyazo.com/33b9aa94159b8b7d848214a07c9b4fe9)
+![Image of ARPoster](https://i.gyazo.com/33b9aa94159b8b7d848214a07c9b4fe9.png)
 
 ## **Theme:**
 Retro by definition is “a style that is consciously derivative or imitative of trends, modes, fashions, or attitudes of the recent past. It generally implies a vintage of at least fifteen or twenty years. For example, clothing from the 1980s or 1990s could be retro."

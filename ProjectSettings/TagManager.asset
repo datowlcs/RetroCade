@@ -5,6 +5,22 @@ TagManager:
   serializedVersion: 2
   tags:
   - Germ
+  - character
+  - Ghost
+  - Pacdot
+  - SideBorder
+  - Wall
+  - Bouncer
+  - Pong
+  - Ghost
+  - Pacdot
+  - SideBorder
+  - Wall
+  - Bouncer
+  - Pong
+  - Ghost
+  - Pacdot
+
   layers:
   - Default
   - TransparentFX

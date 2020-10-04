@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/FPSscene.unity
+    guid: aa84745e25ec1dc4a914e5c42f4aa92e
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7028db66fe03c404e9e6da510ff64f39,
       type: 2}

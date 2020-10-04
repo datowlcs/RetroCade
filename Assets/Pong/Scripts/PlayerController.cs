@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,24 +23,29 @@ public class PlayerController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
 
-            if (touch.phase == TouchPhase.Began)
+            switch (touch.phase)
             {
-                if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
-                {
-                    m_DeltaY = touchPos.y - transform.position.y;
-                    m_Touched = true;
-                }
-            }
-            else if (touch.phase == TouchPhase.Moved)
-            {
-                if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos) && m_Touched)
-                    m_Rb.MovePosition (new Vector2(0, touchPos.y - m_DeltaY));
-            }
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                m_Touched = false;
+                //When a touch has first been detected, change the message and record the starting position
+                case TouchPhase.Began:
+                    // Record initial touch position.
+                    if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
+                    {
+                        m_DeltaY = touchPos.y - transform.position.y;
+                        m_Touched = true;
+                    }
+                    break;
+                //Determine if the touch is a moving touch
+                case TouchPhase.Moved:
+                    if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos) && m_Touched)
+                        m_Rb.MovePosition(new Vector2(0, touchPos.y - m_DeltaY));
+                    break;
+
+                case TouchPhase.Ended:
+                    m_Touched = false;
+                    break;
             }
 
         }
     }
+
 }

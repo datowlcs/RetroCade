@@ -7,13 +7,16 @@ public class BouncerController : MonoBehaviour
     [SerializeField]
     GameObject m_Object;
 
+    float m_XPosition;
+
+    void Start()
+    {
+        m_XPosition = transform.position.x;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.name == "Bouncer")
-        {
-            transform.position = new Vector3((float)-0.121, m_Object.transform.position.y);
-        }
-       
+        transform.position = new Vector3(m_XPosition, m_Object.transform.position.y);
     }
 }

@@ -5375,7 +5375,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MULTIPLAYER
+  m_Text: 'MULTIPLAYER
+
+    (Coming Soon)'
 --- !u!222 &1743055321
 CanvasRenderer:
   m_ObjectHideFlags: 0

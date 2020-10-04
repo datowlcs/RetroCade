@@ -19,6 +19,7 @@ public class PacmanController : MonoBehaviour {
     
     // text display vars
     public Text scoreDisplay;
+    public Text playerScoreDisplay;
     public Text livesDisplay;
 
 
@@ -29,8 +30,8 @@ public class PacmanController : MonoBehaviour {
 
     void FixedUpdate () {;
 
-        scoreDisplay.text = score.ToString();
-        livesDisplay.text = lives.ToString();
+        playerScoreDisplay.text = score.ToString();
+        livesDisplay.text = "Lives: " + lives.ToString();
 
         // gradualy move towards destination
         Vector2 path = Vector2.MoveTowards(transform.position, destination, speed);

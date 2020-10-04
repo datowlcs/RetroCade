@@ -4,30 +4,23 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-<<<<<<< HEAD
+  - Germ
   - character
-=======
   - Ghost
   - Pacdot
->>>>>>> master
-=======
-<<<<<<< Pong
   - SideBorder
   - Wall
   - Bouncer
   - Pong
   - Ghost
   - Pacdot
-=======
   - SideBorder
   - Wall
   - Bouncer
   - Pong
   - Ghost
   - Pacdot
->>>>>>> test
->>>>>>> 29c0d02c16e78fe1fe2ab8f9c0c8365473a3e4a2
+
   layers:
   - Default
   - TransparentFX
@@ -37,8 +30,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Player
+  - Germ
   - 
   - 
   - 

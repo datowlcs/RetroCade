@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+
 
 public class GhostController : MonoBehaviour
 {
@@ -26,14 +28,25 @@ public class GhostController : MonoBehaviour
         }
 
         // animations
-        // Vector2 dir = targetPoints[currPoint].position - transform.position;
-        // GetComponent<Animator>().SetFloat("XDirection", dir.x);
-        // GetComponent<Animator>().SetFloat("YDirection", dir.y);
+        Vector2 dir = targetPoints[currPoint].position - transform.position;
+        GetComponent<Animator>().SetFloat("XDirection", dir.x);
+        GetComponent<Animator>().SetFloat("YDirection", dir.y);
     }
 
     void OnTriggerEnter2D(Collider2D other) {
         // destroy pacman if they collide 
         if (other.name == "pacman") 
-            Destroy(other.gameObject);
+        {
+            if (PacmanController.lives == 1)
+            {
+                PacmanController.score = 0;
+                PacmanController.lives = 3;
+                SceneManager.LoadScene("Pacman");
+            }
+            else 
+            {
+                PacmanController.lives--;
+            }
+        }
     }
 }

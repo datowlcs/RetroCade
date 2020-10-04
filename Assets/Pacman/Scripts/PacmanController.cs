@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PacmanController : MonoBehaviour {
@@ -7,6 +8,13 @@ public class PacmanController : MonoBehaviour {
     private Vector2 destination = Vector2.zero;
     private Vector2 swipeStart;
     private Vector2 swipeEnd;
+    
+    // global vars
+    public static int score = 0;
+    public static int lives = 3;
+
+    public Text scoreDisplay;
+    public Text livesDisplay;
 
     public float SWIPE_THRESHOLD = 20f;
 
@@ -15,6 +23,10 @@ public class PacmanController : MonoBehaviour {
     }
 
     void FixedUpdate () {
+
+        scoreDisplay.text = score.ToString();
+        livesDisplay.text = lives.ToString();
+
         // gradualy move towards destination
         Vector2 path = Vector2.MoveTowards(transform.position, destination, speed);
         GetComponent<Rigidbody2D>().MovePosition(path);
@@ -50,9 +62,9 @@ public class PacmanController : MonoBehaviour {
 
         // TODO: Fix buggy animations that cause pacman to spin rapidly
         // animations
-        Vector2 dir = destination - (Vector2)transform.position;
-        GetComponent<Animator>().SetFloat("XDirection", dir.x);
-        GetComponent<Animator>().SetFloat("YDirection", dir.y);
+        // Vector2 dir = destination - (Vector2)transform.position;
+        // GetComponent<Animator>().SetFloat("XDirection", dir.x);
+        // GetComponent<Animator>().SetFloat("YDirection", dir.y);
     }
 
     void performSwipeMovement()
@@ -65,11 +77,13 @@ public class PacmanController : MonoBehaviour {
             if ((swipeEnd.y - swipeStart.y > 0) && canMove(Vector2.up))
             {
                 destination = (Vector2)transform.position + (Vector2) new Vector2(0, 35);
+                GetComponent<Animator>().SetBool("movingUp", true);
             }
             // downwards swipe
             else if ((swipeEnd.y - swipeStart.y < 0) && canMove(-Vector2.up))
             {
                 destination = (Vector2)transform.position - (Vector2) new Vector2(0, 35);
+                GetComponent<Animator>().SetBool("movingDown", true);
             }
             swipeStart = swipeEnd;
         }
@@ -81,11 +95,13 @@ public class PacmanController : MonoBehaviour {
             if ((swipeEnd.x - swipeStart.x > 0) && canMove(-Vector2.right))
             {
                 destination = (Vector2)transform.position - (Vector2) new Vector2(35, 0);
+                GetComponent<Animator>().SetBool("movingRight", true);
             }
             // left swipe
             else if ((swipeEnd.x - swipeStart.x < 0) && canMove(Vector2.right))
             {
                 destination = (Vector2)transform.position + (Vector2) new Vector2(35, 0);
+                GetComponent<Animator>().SetBool("movingLeft", true);
             }
             swipeStart = swipeEnd;
         }

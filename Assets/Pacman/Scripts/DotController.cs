@@ -6,7 +6,10 @@ public class DotController : MonoBehaviour
 {
     // on collision trigger
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.name == "pacman")
+        if (other.name == "pacman") 
+        {
             Destroy(gameObject);
+            PacmanController.score++;
+        }
     }
 }

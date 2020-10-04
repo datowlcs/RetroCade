@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+//done with help of ITVDN
+public class CharacterMovement : Unit
 {
     //shows the field in the inspector
     [SerializeField]
@@ -16,20 +17,26 @@ public class CharacterMovement : MonoBehaviour
     new private Animator animator;
     new private SpriteRenderer sprite;
 
-    private bool isGrounded = false;
+   // private Camera mainCamera;
+   // public Vector2 widthThresold;
+   // public Vector2 heightThresold;
 
+    private bool isGrounded = false;
+    private Bullet bullet;
     private CharacterState State
     { 
     get { return (CharacterState)animator.GetInteger("State"); }
     set { animator.SetInteger("State", (int)value); }
     }
 
-    void Awake()
+    private void Awake()
     {
         //search by tag is the cheapest way
         rigidbody = GetComponent<Rigidbody2D>();//GameObject.FindGameObjectWithTag("character").GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();    //GameObject.FindGameObjectWithTag("character").GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();//GameObject.FindGameObjectWithTag("character").GetComponentInChildren<SpriteRenderer>();
+
+        bullet = Resources.Load<Bullet>("Bullet");
     }
     // Start is called before the first frame update
     void Start()
@@ -45,10 +52,14 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        State = CharacterState.idle;
+       
+
+        if (isGrounded) State = CharacterState.Idle;
 
         if (Input.GetButton("Horizontal"))
         { Move(); }
+
+        if (Input.GetButtonDown("Fire1")) Shoot();
 
         if (isGrounded && Input.GetButton("Jump"))
         {  Jump(); }
@@ -60,27 +71,44 @@ public class CharacterMovement : MonoBehaviour
         Vector3 direction = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed*Time.deltaTime);
         sprite.flipX = direction.x < 0.0F; //if were moving to eg dir: flip
-        State = CharacterState.move;
+        State = CharacterState.Move;
+    }
+
+    private void Shoot()
+    {
+        Vector3 position = transform.position; position.y += 0.5F;
+        Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
+
+        newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
     }
 
     private void Jump()
     {
-        State = CharacterState.jump;
+        State = CharacterState.Jump;
         rigidbody.AddForce(transform.up * jump, ForceMode2D.Impulse);
         
     }
 
+    public override void ReceiveDamage()
+    {
+        Destroy(gameObject, 1.5F);
+
+        Debug.Log("die");
+    }
     private void IsGrounded()
     {
+
         //returns colliders in the radius
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.3F);
         isGrounded = colliders.Length > 1; //if more than one collider(our) then we're grounded
+
+        if (!isGrounded)State = CharacterState.Jump;
     }
 }
 
 public enum CharacterState
 {
-    idle, //0
-    move, //1
-    jump  //2
+    Idle, //0
+    Move, //1
+    Jump  //2
 }

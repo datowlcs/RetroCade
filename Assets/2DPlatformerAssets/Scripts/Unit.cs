@@ -12,4 +12,9 @@ public class Unit : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public virtual void Respawn()
+    {
+        gameObject.transform.position = new Vector3(-115, -0.2F, 0);
+    }
 }

@@ -3,19 +3,19 @@ using System.Collections;
 
 public class Character : Unit
 {
-    [SerializeField]
-    private int lives = 5;
+    //[SerializeField]
+    //private int lives = 5;
 
-    public int Lives
-    {
-        get { return lives; }
-        set
-        {
-           if (value < 5) lives = value;
-            livesBar.Refresh();
-        }
-    }
-    private LivesBar livesBar;
+   // public int Lives
+   // {
+     //  get { return lives; }
+     //   set
+     //   {
+     //      if (value < 5) lives = value;
+     //       livesBar.Refresh();
+    //    }
+   // }
+    //private LivesBar livesBar;
 
     [SerializeField]
     private float speed = 3.0F;
@@ -38,7 +38,7 @@ public class Character : Unit
 
     private void Awake()
     {
-        livesBar = FindObjectOfType<LivesBar>();
+        //livesBar = FindObjectOfType<LivesBar>();
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
@@ -87,12 +87,18 @@ public class Character : Unit
 
     public override void ReceiveDamage()
     {
-        Lives--;
+        //Lives--;
+        //Destroy(gameObject);
+        Respawn();
+        //rigidbody.velocity = Vector3.zero;
+        //rigidbody.AddForce(transform.up * 8.0F, ForceMode2D.Impulse);
 
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.AddForce(transform.up * 8.0F, ForceMode2D.Impulse);
+       // Debug.Log(lives);
+    }
 
-        Debug.Log(lives);
+    public override void Respawn()
+    {
+        gameObject.transform.position = new Vector3(-115, -0.2F, 0);
     }
 
     private void CheckGround()
@@ -104,16 +110,18 @@ public class Character : Unit
         if (!isGrounded) State = CharState.Jump;
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
+    /* private void OnTriggerEnter2D(Collider2D collider)
+     {
 
-        Bullet bullet = collider.gameObject.GetComponent<Bullet>();
-        if (bullet && bullet.Parent != gameObject)
-        {
-            ReceiveDamage();
-        }
-    }
+         Bullet bullet = collider.gameObject.GetComponent<Bullet>();
+         if (bullet && bullet.Parent != gameObject)
+         {
+             ReceiveDamage();
+         }
+     }
+     */
 }
+
 
 
 public enum CharState

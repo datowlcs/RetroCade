@@ -7,26 +7,36 @@ public class MachineController : MonoBehaviour
 {
     [SerializeField]
     int m_SceneIndex;
+    GameObject focusObj;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0)
+        if(Input.touchCount>0 && Input.GetTouch(0).phase==TouchPhase.Began)
         {
-            Touch touch = Input.GetTouch(0);
-            Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-
-            switch (touch.phase)
+            focusObj = null;
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit hit;
+            
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity))
+            
             {
-                case TouchPhase.Began:
-                    // Record initial touch position.
-                    if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
-                    {
-                        SceneManager.LoadScene(m_SceneIndex, LoadSceneMode.Single);
-                    }
-                    break;
+                focusObj=hit.transform.gameObject;
             }
+        }
+          
+        if(focusObj && Input.touchCount >0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            if (focusObj.tag == "Pong")
+            {
+                 SceneManager.LoadScene(m_SceneIndex, LoadSceneMode.Single);
+            }
+        
+        }
 
+        if(focusObj && Input.touchCount >0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            focusObj=null;
         }
     }
 }

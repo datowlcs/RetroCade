@@ -27,10 +27,18 @@ public class MachineController : MonoBehaviour
           
         if(focusObj && Input.touchCount >0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
+            // SceneManager.LoadScene(m_SceneIndex, LoadSceneMode.Single);
             if (focusObj.tag == "Pong")
             {
-                 SceneManager.LoadScene(m_SceneIndex, LoadSceneMode.Single);
+                Time.timeScale = 1;
+                 SceneManager.LoadScene("Pong");
             }
+            else if (focusObj.tag == "Pacman")
+            {
+                Time.timeScale = 1;
+                 SceneManager.LoadScene("Pacman");
+            }
+        
         
         }
 

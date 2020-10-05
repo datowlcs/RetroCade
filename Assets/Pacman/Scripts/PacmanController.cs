@@ -24,6 +24,7 @@ public class PacmanController : MonoBehaviour {
 
 
     void Start () {
+        Time.timeScale = 1;
         destination = transform.position;
         dotsRemaining = GameObject.FindGameObjectsWithTag("Pacdot").Length;
     }

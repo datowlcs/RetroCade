@@ -22,6 +22,7 @@ public class GameOverUI : MonoBehaviour
 
     public void OnExitClick()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 }

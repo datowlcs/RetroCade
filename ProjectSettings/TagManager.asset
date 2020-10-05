@@ -4,21 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< Pong
-  - SideBorder
-  - Wall
-  - Bouncer
   - Pong
-  - Ghost
-  - Pacdot
-=======
-  - SideBorder
-  - Wall
-  - Bouncer
-  - Pong
-  - Ghost
-  - Pacdot
->>>>>>> test
+  - Pacman
   layers:
   - Default
   - TransparentFX
